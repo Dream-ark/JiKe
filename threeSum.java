@@ -1,4 +1,5 @@
-
+【视频学习Day03_LeetCode15】
+//思路：1.暴力破解：依次遍历，寻找是否有-nums[i]==nums[j]+nums[k]，isInList和isSame用来去重。
 
 class Solution {
     public List<List<Integer>> threeSum(int[] nums) {
