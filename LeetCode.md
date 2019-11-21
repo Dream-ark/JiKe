@@ -18,7 +18,7 @@
 
 
 ## 解题思路
-归纳法，当n=0,1,2，输出分别是0,1,2。当n>=3,f(n)=f(n-1)+f(n-2)
+/*归纳法，当n=0,1,2，输出分别是0,1,2。当n>=3,f(n)=f(n-1)+f(n-2)*/
 ```java
 public class Solution{
  public void climbStairs(int n){
@@ -42,29 +42,64 @@ public class Solution{
 # 20.括号匹配
 ## 题目描述
 
-给定一个只包括 '('，')'，'{'，'}'，'['，']' 的字符串，判断字符串是否有效。有效字符串需满足：左括号必须用相同类型的右括号闭合。左括号必须以正确的顺序闭合。注意空字符串可被认为是有效字符串。输入: "()"，输出: true。输入: "(]"，输出: false。
+给定一个只包括 '('，')'，'{'，'}'，'['，']' 的字符串，判断字符串是否有效。有效字符串需满足：左括号必须用相同类型的右括号闭合。左括号必须以正确的顺序闭合。注意空字符串可被认为是有效字符串。例如，输入: "()"，输出: true。输入: "(]"，输出: false。
 
 
 ## 解题思路
-归纳法，当n=0,1,2，输出分别是0,1,2。当n>=3,f(n)=f(n-1)+f(n-2)
+/*1.暴力：依次遍历字符串元素，左括号存在list中；遇到右括号，先判断list中是否存有元素，有元素再判断在list中的最后一个元素是否和其匹配。没有元素，直接返回false。
+1.1匹配，将元素从list中删除；1.2不匹配，无效括号对。2.如果都是配对的，那么最后list为空。
+*/
 ```java
-public class Solution{
- public void climbStairs(int n){
-  if(n==0){return 0;}
-  if(n==1){return 1;}
-  if(n==2){return 2;}
-  
-  int one_step=1;
-  int two_step=2;
-  int all_steps=0;
-  for(int i=2;i<n;i++){
-    all_steps=one_step+two_step;
-    one_step=two_step;
-    two_step=all_steps;
+class Solution{
+  public boolean isValid(String s){
+    List<Character> list =new ArrayList<>();
+    for(int i=0;i<s.length();i++){
+      if(s.charAt(i)=='('||s.charAt(i)=='{'||s.charAt(i)=='['){
+          list.add(s.charAt(i));
+      }
+      if(s.charAt(i)==')'||s.charAt(i)=='}'||s.charAt(i)==']'){
+          if(list.size()==0){
+              return false;
+          }
+          char ch=list.get(list.size()-1).charValue();
+          if(s.charAt(i)-ch!=1||s.charAt(i)-ch!=2){
+              return false;
+          }
+          list.remove(list.size()-1);
+      }
+    }
+      if(list.size()==0){
+        return true;
+      }
+        return false;
   }
-  return all_steps;
- }
 }
+```
+/*2.使用栈存储，复杂度O(n)*/
+```java
+class Solution{
+  public boolean isValid(String s){
+    Stack<Character> stack=new Stack<>();
+    if(s.length()==0){
+        return true;
+    }
+    for(int i=0;i<s.length();i++){
+      if(s.charAt(i)=='('){
+        stack.push(')');
+      }else if(s.charAt(i)=='{'){
+        stack.push('}');
+      }else if(s.charAt(i)=='['){
+        stack.push(']');
+      }else{
+        if(stack.isEmpty()||stack.pop()!=s.charAt(i)){
+          return false;
+        }
+      }
+    }
+    return stack.isEmpty();
+  }
+}
+
 ```
 ## 如何改变文本的样式
 
