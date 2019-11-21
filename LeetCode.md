@@ -275,20 +275,120 @@ class Solution {
 尽可能想出更多的解决方案，至少有三种不同的方法可以解决这个问题。
 要求使用空间复杂度为 O(1) 的 原地 算法。
 ## 解题思路
-1.新的下标id记录，当相邻元素不相等，存储在id位置；2.返回id为去重后的数组长度
+1.数组分为长度k和length-k的两部分；2.倒置0到length-k-1和length-k到length-1；3.整个数组倒置
+```java
+public class Solution{
+ public void rotate(int[] nums,int k){
+   int n=nums.length;
+   reverse(nums,0,n-k-1);
+   reverse(nums,n-k,n-1);
+   reverse(nums,0,n-1);
+ }
+ private void reverse(int[] nums,int start,int end){
+    int temp;
+    while(start<end){
+      temp=nums[start];
+      nums[start]=nums[end];
+      nums[end]=temp;
+      end--;
+      start++;
+ }
+}
+```
+# 15.找出所有的三元和为0
+## 题目描述
+
+给定一个包含 n 个整数的数组 nums，判断 nums 中是否存在三个元素 a，b，c ，使得 a + b + c = 0 ？找出所有满足条件且不重复的三元组。
+注意：答案中不可以包含重复的三元组。
+
+例如, 给定数组 nums = [-1, 0, 1, 2, -1, -4]，
+
+满足要求的三元组集合为：
+
+[
+
+  [-1, 0, 1],
+  
+  [-1, -1, 2]
+  
+]
+## 解题思路
+1.暴力破解：依次遍历，寻找是否有-nums[i]==nums[j]+nums[k]，isInList和isSame用来去重。
+2.双指针+排序：将数组排序；lo指针从前向后，hi指针从后向前,条件为三数和的大小是否等于0，如小于0，则lo++；反之hi--。
 ```java
 class Solution {
-    public int removeDuplicates(int[] nums) {
+//法一：暴力破解
+    public List<List<Integer>> threeSum(int[] nums) {
         int n=nums.length;
-        int id=1;
-        for(int i=1;i<n;i++){
-            if(nums[i]!=nums[i-1]){
-                nums[id++]=nums[i];
+        List<List<Integer>> list=new ArrayList<>();
+        for(int i=0;i<n;i++){
+            for(int j=i+1;j<n;j++){
+                for(int k=j+1;k<n;k++){
+                    if(nums[j]+nums[k]==-nums[i]){
+                        List<Integer> temp=new ArrayList<>();
+                        temp.add(nums[i]);
+                        temp.add(nums[j]);
+                        temp.add(nums[k]);
+                        if(isInList(list,temp)){
+                            continue;
+                        }
+                        list.add(temp);
+                    }
+                }
             }
         }
-        return id;
+        return list;
     }
+    private boolean isInList(List<List<Integer>> list,List<Integer> temp){
+        for(int i=0;i<list.size();i++){
+            if(isSame(list.get(i),temp)){
+                return true;
+            }
+        }
+        return false;
+    }
+    private boolean isSame(List<Integer> l1,List<Integer> l2){
+        Collections.sort(l1);
+        Collections.sort(l2);
+        for(int i=0;i<l1.size();i++){
+            if(l1.get(i)==l2.get(i)){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    //法二：双指针+排序
+   public List<List<Integer>> threeSum(int[] nums) {
+      List <List <Integer>> list = new ArrayList <>();
+		Arrays.sort(nums);
+		for (int i = 0; i < nums.length() - 2; i++) {
+			if (nums[i] != nums[i - 1] || i == 0) {
+				int lo = i + 1, hi = nums.length - 1;
+				while(lo<hi){
+					if (nums[i] + nums[lo] + nums[hi] == 0) {
+						list.add(Arrays.asList(nums[i], nums[lo], nums[hi]));
+						while (nums[lo] == nums[lo + 1] && lo < hi) {
+							lo++;
+						}
+						while (nums[hi] == nums[hi + 1] && lo < hi) {
+							hi--;
+						}
+						lo++;
+						hi--;
+					} else if (nums[i] + nums[lo] + nums[hi] < 0) {
+						lo++;
+					} else {
+						hi--;
+					}
+				}
+				
+			}
+		}
+		return list;
+   }
 }
+© 2019 GitHub, Inc.
 ```
 ## 如何改变文本的样式
 
