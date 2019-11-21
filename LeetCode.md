@@ -36,16 +36,36 @@ public class Solution{
   }
   return all_steps;
  }
-
 }
 ```
 
-## 合理的创建标题，有助于目录的生成
+# 20.括号匹配
+## 题目描述
 
-直接输入1次<kbd>#</kbd>，并按下<kbd>space</kbd>后，将生成1级标题。
-输入2次<kbd>#</kbd>，并按下<kbd>space</kbd>后，将生成2级标题。
-以此类推，我们支持6级标题。有助于使用`TOC`语法后生成一个完美的目录。
+给定一个只包括 '('，')'，'{'，'}'，'['，']' 的字符串，判断字符串是否有效。有效字符串需满足：左括号必须用相同类型的右括号闭合。左括号必须以正确的顺序闭合。注意空字符串可被认为是有效字符串。输入: "()"，输出: true。输入: "(]"，输出: false。
 
+
+## 解题思路
+归纳法，当n=0,1,2，输出分别是0,1,2。当n>=3,f(n)=f(n-1)+f(n-2)
+```java
+public class Solution{
+ public void climbStairs(int n){
+  if(n==0){return 0;}
+  if(n==1){return 1;}
+  if(n==2){return 2;}
+  
+  int one_step=1;
+  int two_step=2;
+  int all_steps=0;
+  for(int i=2;i<n;i++){
+    all_steps=one_step+two_step;
+    one_step=two_step;
+    two_step=all_steps;
+  }
+  return all_steps;
+ }
+}
+```
 ## 如何改变文本的样式
 
 *强调文本* _强调文本_
