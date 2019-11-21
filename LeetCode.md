@@ -18,7 +18,7 @@
 
 
 ## 解题思路
-/*归纳法，当n=0,1,2，输出分别是0,1,2。当n>=3,f(n)=f(n-1)+f(n-2)*/
+归纳法，当n=0,1,2，输出分别是0,1,2。当n>=3,f(n)=f(n-1)+f(n-2)
 ```java
 public class Solution{
  public void climbStairs(int n){
@@ -46,9 +46,9 @@ public class Solution{
 
 
 ## 解题思路
-/*1.暴力：依次遍历字符串元素，左括号存在list中；遇到右括号，先判断list中是否存有元素，有元素再判断在list中的最后一个元素是否和其匹配。没有元素，直接返回false。
+1.暴力：依次遍历字符串元素，左括号存在list中；遇到右括号，先判断list中是否存有元素，有元素再判断在list中的最后一个元素是否和其匹配。没有元素，直接返回false。
 1.1匹配，将元素从list中删除；1.2不匹配，无效括号对。2.如果都是配对的，那么最后list为空。
-*/
+
 ```java
 class Solution{
   public boolean isValid(String s){
@@ -75,7 +75,7 @@ class Solution{
   }
 }
 ```
-/*2.使用栈存储，复杂度O(n)*/
+2.使用栈存储，复杂度O(n)
 ```java
 class Solution{
   public boolean isValid(String s){
