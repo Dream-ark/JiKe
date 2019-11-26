@@ -75,7 +75,7 @@ class Solution{
   }
 }
 ```
-2.使用栈存储，复杂度O(n)
+2.使用栈存储，复杂度O(n),强烈推荐
 ```java
 class Solution{
   public boolean isValid(String s){
@@ -136,7 +136,7 @@ public class Solution{
 ```java
 class Solution {
     public void merge(int[] nums1, int m, int[] nums2, int n) {
-    //法1：时间复杂度高O(n)
+    //法1：时间复杂度高O(n)，面试不适用API，里面会有更多的复杂度
         System.arraycopy(nums2,0,nums1,m,n);
         Arrays.sort(nums1);
     }
@@ -150,6 +150,7 @@ class Solution {
 		int k = m+n-1;
 		while(i >=0 && j>=0)
 		nums1[k--]=nums1[i]>nums2[j]?nums1[i--]:nums2[j--];
+	        // 考虑nums2数组的首位数小于nums1的首位数
 		while(j>=0)
 			nums1[k--] = nums2[j--];   
     }
